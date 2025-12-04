@@ -73,6 +73,29 @@
         <section class="course-list" id="listaDeCursos">
             <!-- Os cards dos cursos serão inseridos aqui via JS -->
         </section>
+        <!-- MODAL EDITAR CURSO -->
+        <div id="modalEditarCurso" class="modal-curso oculto">
+
+            <h3>Editar curso</h3>
+
+            <input type="hidden" id="editId">
+
+            <label>Nome do curso</label>
+            <input type="text" id="editName" placeholder="Nome do curso">
+
+            <label>Descrição</label>
+            <textarea id="editDescription" placeholder="Descrição do curso"></textarea>
+
+            <label>URL da Imagem</label>
+            <input type="text" id="editUrlImage" placeholder="https://...">
+
+            <div class="modal-actions">
+                <button class="btn-salvar" onclick="submitEditarCurso()">Salvar</button>
+                <button class="btn-cancelar" onclick="fecharModalEditar()">Cancelar</button>
+            </div>
+
+        </div>
+
 
     </main>
 

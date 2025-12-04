@@ -42,7 +42,7 @@ function abrirModalCriar() {
     document.getElementById("modalCriarCurso").classList.remove("oculto");
 }
 
-// FECHAR MODAL
+// FECHAR MODAL DE CRIAR
 function fecharModalCriar() {
     document.getElementById("modalCriarCurso").classList.add("oculto");
 }
@@ -61,6 +61,43 @@ function submitCriarCurso() {
     fecharModalCriar();
 }
 
+function editarCurso(id) {
+    const curso = window.listaCursos.find(c => c.id == id);
+
+    if (!curso) {
+        alert("Erro: curso não encontrado.");
+        return;
+    }
+
+    document.getElementById("editId").value = curso.id;
+    document.getElementById("editName").value = curso.name;
+    document.getElementById("editDescription").value = curso.description;
+    document.getElementById("editUrlImage").value = curso.urlImage;
+
+    document.getElementById("modalEditarCurso").classList.remove("oculto");
+}
+
+function fecharModalEditar() {
+    document.getElementById("modalEditarCurso").classList.add("oculto");
+}
+
+
+function submitEditarCurso() {
+
+    const dados = {
+        id: document.getElementById("editId").value,
+        name: document.getElementById("editName").value,
+        description: document.getElementById("editDescription").value,
+        urlImage: document.getElementById("editUrlImage").value,
+        idCreator: 1
+    };
+
+    modificarCurso(dados);
+    fecharModalEditar();
+}
+
+
+
 // -------------------- MONTAR LISTA NO HTML --------------------
 function preencherLista(lista) {
     const container = document.getElementById("listaDeCursos");
@@ -76,9 +113,12 @@ function preencherLista(lista) {
         card.classList.add("curso-card");
 
         card.innerHTML = `
-            <img src="${curso.imagem}" class="curso-img">
-            <h3>${curso.titulo}</h3>
-            <p>${curso.descricao}</p>
+            <img src="${curso.urlImage}" class="curso-img">
+
+            <h3>${curso.name}</h3>
+
+            <p>${curso.description}</p>
+
 
             <div class="curso-actions">
                 <button class="btn-editar" onclick="editarCurso(${curso.id})">Editar</button>
