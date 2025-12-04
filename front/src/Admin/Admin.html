@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Admin.css">
+    <script src="../../js/cursoAdmin.js" defer> </script>
+    <title>Painel de Gerenciamento</title>
+</head>
+
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-container">
+            
+            <!-- Logo -->
+            <div class="logo">
+                <a href="http://localhost:8000/front/src/Home/Home.html">LEO</a>
+            </div>
+
+            <!-- Caixa de busca -->
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="Pesquisar curso...">
+            </div>
+
+            <!-- Perfil -->
+            <div class="profile">
+                <div class="profile-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" 
+                         viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2" 
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- MAIN -->
+    <main class="main">
+
+        <!-- Área de botões do administrador -->
+        <section class="actions">
+            <button class="btn btn-add" id="btnAddCurso" onclick="adicionarCurso()">Adicionar novo curso</button>
+        </section>
+
+        <!-- Lista de cursos já cadastrados -->
+        <section class="course-list" id="listaDeCursos">
+            <!-- Os cards dos cursos serão inseridos aqui via JS -->
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="general-info">
+            <div class="corp-info">
+                <h4>LEO</h4>
+                <p>Maecenas faucibus mollis interdum...</p>
+            </div>
+            <div class="general-info-right">
+                <div class="contact">
+                    <h4>CONTATO</h4>
+                    <p>(21) 98765-3434</p>
+                    <p>contato@leolearning.com</p>
+                </div>
+
+                <div class="social-media">
+                    <h4>REDES SOCIAIS</h4>
+                    <div class="icons">
+                        <img src="/front/assets/twitter.png" alt="twitter">
+                        <img src="/front/assets/youtube.png" alt="youtube">
+                        <img src="/front/assets/pinterest.png" alt="pinterest">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="copyrights">
+            Copyright 2017 – All rights reserved.
+        </div>
+    </footer>
+</body>
+</html>
