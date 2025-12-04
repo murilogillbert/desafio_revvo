@@ -1,0 +1,307 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+    color: inherit;           
+    text-decoration: none;   
+    outline: none;
+}
+
+body {
+    background: #f3f3f3;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ------------------------- */
+/* HEADER                    */
+/* ------------------------- */
+
+.header {
+    background: #ffffff;
+    color: rgb(0, 0, 0);
+    padding: 15px 25px;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo a {
+    font-size: 22px;
+    font-weight: bold;
+    color: #000000; /* dourado do estilo da sua home */
+}
+
+.search-box {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    border-radius: 1px;
+}
+
+.search-input {
+    width: 60%;
+    max-width: 350px;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.profile-icon svg {
+    color: #000000;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.profile-icon svg:hover {
+    color: #ffcc00;
+}
+
+/* ------------------------- */
+/* MAIN                      */
+/* ------------------------- */
+
+.main {
+    padding: 30px;
+}
+
+/* ------------------------- */
+/* BOTÃO DE AÇÕES            */
+/* ------------------------- */
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 25px;
+}
+
+.btn {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.btn-add {
+    background: #ffcc00;
+    color: #111;
+    transition: 0.3s;
+}
+
+.btn-add:hover {
+    background: #e0b200;
+}
+
+
+.modal-curso {
+    margin-top: 20px;
+    padding: 20px;
+    background: #ffffff;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 500px;
+}
+
+.oculto {
+    display: none;
+}
+
+.modal-curso input,
+.modal-curso textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0 15px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-salvar {
+    background: #28a745;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-cancelar {
+    background: #dc3545;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+}
+
+/* ------------------------- */
+/* LISTA DE CURSOS (GRID)    */
+/* ------------------------- */
+
+.course-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 25px;
+}
+
+/* ------------------------- */
+/* CARD DO CURSO             */
+/* ------------------------- */
+
+.curso-card {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    transition: 0.3s;
+}
+
+.curso-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 18px rgba(0,0,0,0.15);
+}
+
+.curso-img {
+    width: 100%;
+    height: 150px;
+    border-radius: 8px;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.curso-card h3 {
+    margin: 8px 0;
+    font-size: 18px;
+}
+
+.curso-card p {
+    font-size: 14px;
+    color: #666;
+}
+
+/* ------------------------- */
+/* AÇÕES DO CARD             */
+/* ------------------------- */
+
+.curso-actions {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-editar,
+.btn-deletar {
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+}
+
+/* editar */
+.btn-editar {
+    background: #0a84ff;
+    color: white;
+}
+
+.btn-editar:hover {
+    background: #0069d9;
+}
+
+/* excluir */
+.btn-deletar {
+    background: #ff3b30;
+    color: white;
+}
+
+.btn-deletar:hover {
+    background: #d92b22;
+}
+
+
+/* FOOTER */
+.footer {
+    background: white;
+    padding: 40px 20px;
+    border-top: 1px solid #ddd;
+}
+
+/* Pai */
+.general-info {
+    max-width: 1400px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;  /* empurra corp-info para esquerda e right para direita */
+    align-items: flex-start;
+}
+
+/* Esquerda */
+.corp-info {
+    flex: 1;
+}
+
+/* Direita */
+.general-info-right {
+    display: flex;
+    align-items: flex-end;
+    gap: 18px;
+}
+
+/* conteúdo interno */
+.contact, .social-media, .corp-info {
+    max-width: 250px;
+}
+
+.social-media .icons {
+    display: flex;
+    gap: 12px;
+}
+
+.social-media img {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+}
+
+.copyrights {
+    text-align: center;
+    margin-top: 30px;
+    color: #777;
+    font-size: 13px;
+}
+
+
+/* ------------------------- */
+/* RESPONSIVIDADE            */
+/* ------------------------- */
+
+@media (max-width: 600px) {
+
+    .search-input {
+        width: 90%;
+    }
+
+    .header-container {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .actions {
+        justify-content: center;
+    }
+}

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +13,7 @@
     <!-- HEADER -->
     <header class="header">
         <div class="header-container">
-            
+
             <!-- Logo -->
             <div class="logo">
                 <a href="http://localhost:8000/front/src/Home/Home.html">LEO</a>
@@ -26,10 +27,8 @@
             <!-- Perfil -->
             <div class="profile">
                 <div class="profile-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" 
-                         viewBox="0 0 24 24" fill="none"
-                         stroke="currentColor" stroke-width="2" 
-                         stroke-linecap="round" stroke-linejoin="round">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                         <circle cx="12" cy="7" r="4"></circle>
                     </svg>
@@ -43,9 +42,32 @@
     <main class="main">
 
         <!-- Área de botões do administrador -->
+
         <section class="actions">
-            <button class="btn btn-add" id="btnAddCurso" onclick="adicionarCurso()">Adicionar novo curso</button>
+            <button class="btn btn-add" id="btnAddCurso" onclick="abrirModalCriar()">Adicionar novo curso</button>
         </section>
+
+        <!-- MODAL DE CRIAR CURSO -->
+        <div id="modalCriarCurso" class="modal-curso oculto">
+
+            <h3>Criar novo curso</h3>
+
+            <label>Nome do curso</label>
+            <input type="text" id="inputName" placeholder="Nome do curso">
+
+            <label>Descrição</label>
+            <textarea id="inputDescription" placeholder="Descrição do curso"></textarea>
+
+            <label>URL da Imagem</label>
+            <input type="text" id="inputUrlImage" placeholder="https://...">
+
+            <div class="modal-actions">
+                <button class="btn-salvar" onclick="submitCriarCurso()">Salvar</button>
+                <button class="btn-cancelar" onclick="fecharModalCriar()">Cancelar</button>
+            </div>
+
+        </div>
+
 
         <!-- Lista de cursos já cadastrados -->
         <section class="course-list" id="listaDeCursos">
@@ -83,4 +105,5 @@
         </div>
     </footer>
 </body>
+
 </html>
