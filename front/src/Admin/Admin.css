@@ -6,8 +6,8 @@
 }
 
 a {
-    color: inherit;           
-    text-decoration: none;   
+    color: inherit;
+    text-decoration: none;
     outline: none;
 }
 
@@ -16,6 +16,7 @@ body {
     color: #333;
     display: flex;
     flex-direction: column;
+    min-height: 100vh;          /* ESSENCIAL PARA O FOOTER IR PARA O FINAL */
 }
 
 /* ------------------------- */
@@ -24,7 +25,7 @@ body {
 
 .header {
     background: #ffffff;
-    color: rgb(0, 0, 0);
+    color: #000;
     padding: 15px 25px;
 }
 
@@ -37,14 +38,13 @@ body {
 .logo a {
     font-size: 22px;
     font-weight: bold;
-    color: #000000; /* dourado do estilo da sua home */
+    color: #000000;
 }
 
 .search-box {
     flex: 1;
     display: flex;
     justify-content: center;
-    border-radius: 1px;
 }
 
 .search-input {
@@ -55,7 +55,7 @@ body {
 }
 
 .profile-icon svg {
-    color: #000000;
+    color: #000;
     cursor: pointer;
     transition: 0.3s;
 }
@@ -70,6 +70,7 @@ body {
 
 .main {
     padding: 30px;
+    flex: 1;                    /* FAZ O MAIN OCUPAR O ESPAÇO NECESSÁRIO */
 }
 
 /* ------------------------- */
@@ -100,7 +101,6 @@ body {
 .btn-add:hover {
     background: #e0b200;
 }
-
 
 .modal-curso {
     margin-top: 20px;
@@ -213,7 +213,6 @@ body {
     border: none;
 }
 
-/* editar */
 .btn-editar {
     background: #0a84ff;
     color: white;
@@ -223,7 +222,6 @@ body {
     background: #0069d9;
 }
 
-/* excluir */
 .btn-deletar {
     background: #ff3b30;
     color: white;
@@ -233,36 +231,35 @@ body {
     background: #d92b22;
 }
 
+/* ------------------------- */
+/* FOOTER                    */
+/* ------------------------- */
 
-/* FOOTER */
 .footer {
     background: white;
     padding: 40px 20px;
     border-top: 1px solid #ddd;
+    margin-top: auto;         
 }
 
-/* Pai */
 .general-info {
     max-width: 1400px;
     margin: auto;
     display: flex;
-    justify-content: space-between;  /* empurra corp-info para esquerda e right para direita */
+    justify-content: space-between;
     align-items: flex-start;
 }
 
-/* Esquerda */
 .corp-info {
     flex: 1;
 }
 
-/* Direita */
 .general-info-right {
     display: flex;
     align-items: flex-end;
     gap: 18px;
 }
 
-/* conteúdo interno */
 .contact, .social-media, .corp-info {
     max-width: 250px;
 }
@@ -285,7 +282,6 @@ body {
     font-size: 13px;
 }
 
-
 /* ------------------------- */
 /* RESPONSIVIDADE            */
 /* ------------------------- */
@@ -303,5 +299,12 @@ body {
 
     .actions {
         justify-content: center;
+    }
+
+    .general-info {
+        flex-direction: column;
+        gap: 25px;
+        text-align: center;
+        align-items: center;
     }
 }
