@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso - Plataforma de Cursos</title>
+    <link rel="stylesheet" href="../shared.css">
+    <link rel="stylesheet" href="Course.css">
+</head>
+<body>
+    <!-- Header será inserido aqui pelo JavaScript -->
+    
+    <main class="course-main">
+        <!-- Cabeçalho do Curso -->
+        <div class="course-header" id="courseHeader">
+            <div class="course-hero">
+                <div class="course-hero-content">
+                    <div class="course-breadcrumb">
+                        <a href="http://localhost:8000/front/src/Home/Home.html">Home</a>
+                        <span> / </span>
+                        <a href="http://localhost:8000/front/src/Courses/Courses.html">Cursos</a>
+                        <span> / </span>
+                        <span id="courseTitleBreadcrumb">Carregando...</span>
+                    </div>
+                    <h1 id="courseTitle">Carregando curso...</h1>
+                    <p id="courseDescription" class="course-description">Descrição do curso será carregada aqui</p>
+                    <div class="course-meta">
+                        <div class="meta-item">
+                            <span class="meta-icon">👨‍🏫</span>
+                            <span>Instrutor: <strong id="courseInstructor">Carregando...</strong></span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-icon">📅</span>
+                            <span>Criado em: <strong id="courseCreatedAt">--/--/----</strong></span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-icon">🔄</span>
+                            <span>Atualizado: <strong id="courseUpdatedAt">--/--/----</strong></span>
+                        </div>
+                        <div class="meta-item" id="enrollmentStatus" style="display: none;">
+                            <span class="meta-icon">📊</span>
+                            <span>Status: <strong id="courseStatus">Não inscrito</strong></span>
+                        </div>
+                    </div>
+                    <div class="course-actions" id="courseActions">
+                        <button class="btn-enroll" id="enrollBtn" style="display: none;">
+                            INSCREVER-SE
+                        </button>
+                        <button class="btn-continue" id="continueBtn" style="display: none;">
+                            CONTINUAR CURSO
+                        </button>
+                        <button class="btn-review" id="reviewBtn" style="display: none;">
+                            REVISAR CURSO
+                        </button>
+                        <button class="btn-admin" id="adminBtn" style="display: none;">
+                            EDITAR CURSO
+                        </button>
+                    </div>
+                </div>
+                <div class="course-hero-image">
+                    <img id="courseImage" src="https://picsum.photos/id/1011/600/400" alt="Imagem do curso">
+                    <div class="course-image-overlay">
+                        <span>🎓 Curso Disponível</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conteúdo Principal -->
+        <div class="course-container">
+            <!-- Coluna Esquerda - Conteúdo -->
+            <div class="course-content">
+                <!-- Seção de Módulos/Aulas -->
+                <section class="course-modules" id="courseModules">
+                    <h2><span class="module-icon">📚</span> Conteúdo do Curso</h2>
+                    <div class="modules-loading" id="modulesLoading">
+                        <p>Carregando conteúdo do curso...</p>
+                    </div>
+                    <div class="modules-list" id="modulesList" style="display: none;">
+                        <!-- Módulos serão inseridos aqui pelo JavaScript -->
+                    </div>
+                </section>
+
+                <!-- Seção de Descrição Detalhada -->
+                <section class="course-description-detailed">
+                    <h2><span class="description-icon">📝</span> Sobre este curso</h2>
+                    <div id="courseFullDescription">
+                        <p>Carregando descrição detalhada...</p>
+                    </div>
+                </section>
+
+                <!-- Seção de Requisitos -->
+                <section class="course-requirements">
+                    <h2><span class="requirements-icon">🎯</span> O que você vai aprender</h2>
+                    <ul id="courseRequirements">
+                        <li>Conteúdo será carregado aqui</li>
+                    </ul>
+                </section>
+            </div>
+
+            <!-- Coluna Direita - Informações -->
+            <div class="course-sidebar">
+                <!-- Card de Progresso -->
+                <div class="progress-card" id="progressCard" style="display: none;">
+                    <h3>Seu Progresso</h3>
+                    <div class="progress-circle">
+                        <svg width="120" height="120" viewBox="0 0 120 120">
+                            <circle cx="60" cy="60" r="54" fill="none" stroke="#eee" stroke-width="12"/>
+                            <circle cx="60" cy="60" r="54" fill="none" stroke="#239c1b" stroke-width="12" 
+                                    stroke-linecap="round" stroke-dasharray="339.292" stroke-dashoffset="0"
+                                    id="progressCircle"/>
+                        </svg>
+                        <div class="progress-text">
+                            <span id="progressPercent">0%</span>
+                            <small>completo</small>
+                        </div>
+                    </div>
+                    <div class="progress-stats">
+                        <div class="stat-item">
+                            <span class="stat-number" id="completedLessons">0</span>
+                            <span class="stat-label">aulas concluídas</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" id="totalLessons">0</span>
+                            <span class="stat-label">aulas totais</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card de Informações -->
+                <div class="info-card">
+                    <h3>Informações do Curso</h3>
+                    <div class="info-items">
+                        <div class="info-item">
+                            <span class="info-icon">⏱️</span>
+                            <div class="info-content">
+                                <span class="info-label">Duração estimada</span>
+                                <span class="info-value" id="courseDuration">8 horas</span>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">📈</span>
+                            <div class="info-content">
+                                <span class="info-label">Nível</span>
+                                <span class="info-value" id="courseLevel">Iniciante</span>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">👥</span>
+                            <div class="info-content">
+                                <span class="info-label">Alunos</span>
+                                <span class="info-value" id="courseStudents">0</span>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">⭐</span>
+                            <div class="info-content">
+                                <span class="info-label">Avaliação</span>
+                                <span class="info-value" id="courseRating">4.5</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card de Ações Rápidas -->
+                <div class="actions-card">
+                    <h3>Ações Rápidas</h3>
+                    <div class="quick-actions">
+                        <button class="btn-quick" id="quickNotes">
+                            <span>📝</span> Minhas Anotações
+                        </button>
+                        <button class="btn-quick" id="quickResources">
+                            <span>📎</span> Materiais
+                        </button>
+                        <button class="btn-quick" id="quickCertificate">
+                            <span>🏆</span> Certificado
+                        </button>
+                        <button class="btn-quick" id="quickShare">
+                            <span>🔗</span> Compartilhar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card do Instrutor -->
+                <div class="instructor-card" id="instructorCard">
+                    <h3>Sobre o Instrutor</h3>
+                    <div class="instructor-info">
+                        <div class="instructor-avatar">
+                            <img id="instructorAvatar" src="https://i.pravatar.cc/100" alt="Instrutor">
+                        </div>
+                        <div class="instructor-details">
+                            <h4 id="instructorName">Carregando...</h4>
+                            <p id="instructorBio">Biografia do instrutor</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para Notas -->
+        <div class="modal" id="notesModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>📝 Minhas Anotações</h3>
+                    <button class="modal-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <textarea id="notesTextarea" placeholder="Digite suas anotações aqui..."></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-save" id="saveNotes">Salvar</button>
+                    <button class="btn-cancel" id="cancelNotes">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer será inserido aqui pelo JavaScript -->
+    
+    <!-- Scripts -->
+    <script src="/front/js/auth.js"></script>
+    <script src="/front/js/header-include.js"></script>
+    <script src="/front/js/footer-include.js"></script>
+    <script src="Course.js"></script>
+</body>
+</html>
