@@ -204,7 +204,6 @@ class AuthManager {
                 <div style="padding: 12px 16px; border-bottom: 1px solid #eee; font-weight: 500; color: #666;">
                     ${this.currentUser.email}
                 </div>
-                <a href="http://localhost:8000/front/src/Profile/Profile.html" style="display: block; padding: 10px 16px; text-decoration: none; color: #333; transition: background-color 0.2s;">Meu Perfil</a>
                 <a href="http://localhost:8000/front/src/Courses/Courses.html" style="display: block; padding: 10px 16px; text-decoration: none; color: #333; transition: background-color 0.2s;">Meus Cursos</a>
                 <div class="dropdown-divider" style="height: 1px; background-color: #eee;"></div>
                 <button class="logout-btn" style="width: 100%; text-align: left; padding: 10px 16px; border: none; background: none; color: #dc3545; cursor: pointer; transition: background-color 0.2s;">Sair</button>

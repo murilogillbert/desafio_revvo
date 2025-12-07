@@ -11,49 +11,56 @@
     <!-- Header será inserido aqui pelo JavaScript -->
     
     <main>
-        <section class="slider-banner">
-            <div class="slide">
-                <img src="https://picsum.photos/id/1011/1600/500" alt="Banner 1">
-                <div class="slide-content">
-                    <h2>LOREM IPSUM</h2>
-                    <p>Aenean lacinia bibendum nulla sed consectetur...</p>
-                    <a href="http://localhost:8000/front/src/Courses/Courses.html" class="slide-button">VER CURSOS</a>
+        <!-- Slider com últimos 3 cursos -->
+        <section class="slider-banner" id="sliderBanner">
+            <div class="slides-container" id="slidesContainer">
+                <!-- Slides serão carregados dinamicamente pelo JavaScript -->
+                <div class="slide loading">
+                    <div class="slide-loading">
+                        <div class="spinner"></div>
+                        <p>Carregando cursos em destaque...</p>
+                    </div>
                 </div>
             </div>
 
-            <div class="slider-dots">
-                <span class="dot active"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
+            <div class="slider-dots" id="sliderDots" style="display: none;">
+                <!-- Dots serão gerados dinamicamente -->
             </div>
 
-            <button class="prev">&#10094;</button>
-            <button class="next">&#10095;</button>
+            <button class="prev" id="prevBtn">&#10094;</button>
+            <button class="next" id="nextBtn">&#10095;</button>
         </section>
 
         <section class="course-list">
             <h3>MEUS CURSOS</h3>
-            <div class="courses-grid">
-                <div class="course-card">
-                    <img src="https://picsum.photos/id/1005/300/200" alt="Curso 1">
-                    <h4>PELLENTESQUE MALESUADA</h4>
-                    <p>Cum sociis natoque penatibus et magnis...</p>
-                    <button class="course-button">VER CURSO</button>
+            <div class="courses-grid" id="coursesGrid">
+                <!-- Cursos do usuário serão carregados aqui -->
+                <div class="course-card loading-card">
+                    <div class="loading-image"></div>
+                    <div class="loading-content">
+                        <div class="loading-title"></div>
+                        <div class="loading-text"></div>
+                        <div class="loading-button"></div>
+                    </div>
                 </div>
-                <div class="course-card">
-                    <img src="https://picsum.photos/id/1012/300/200" alt="Curso 2">
-                    <h4>PELLENTESQUE MALESUADA</h4>
-                    <p>Cum sociis natoque penatibus et magnis...</p>
-                    <button class="course-button">VER CURSO</button>
+                <div class="course-card loading-card">
+                    <div class="loading-image"></div>
+                    <div class="loading-content">
+                        <div class="loading-title"></div>
+                        <div class="loading-text"></div>
+                        <div class="loading-button"></div>
+                    </div>
                 </div>
-                <div class="course-card">
-                    <img src="https://picsum.photos/id/1025/300/200" alt="Curso 3">
-                    <h4>PELLENTESQUE MALESUADA</h4>
-                    <p>Cum sociis natoque penatibus et magnis...</p>
-                    <button class="course-button">VER CURSO</button>
+                <div class="course-card loading-card">
+                    <div class="loading-image"></div>
+                    <div class="loading-content">
+                        <div class="loading-title"></div>
+                        <div class="loading-text"></div>
+                        <div class="loading-button"></div>
+                    </div>
                 </div>
                 
-                <!-- Mostrar "Adicionar Curso" apenas para usuários logados -->
+                <!-- Card "Adicionar Curso" para usuários logados -->
                 <div class="course-add" id="courseAddSection">
                     <a href="http://localhost:8000/front/src/Courses/Courses.html">
                         <div class="add-box">
@@ -65,10 +72,23 @@
             </div>
             
             <!-- Mensagem para usuários não logados -->
-            <div class="login-prompt" id="loginPrompt" style="display: none; text-align: center; margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 8px;">
-                <h4>Faça login para ver seus cursos</h4>
-                <p>Entre na sua conta para acessar todos os recursos da plataforma</p>
-                <a href="http://localhost:8000/front/src/Login/Login.html" class="login-button" style="display: inline-block; margin-top: 10px; padding: 10px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 4px;">Fazer Login</a>
+            <div class="login-prompt" id="loginPrompt">
+                <div class="prompt-content">
+                    <div class="prompt-icon">🎓</div>
+                    <h4>Faça login para ver seus cursos</h4>
+                    <p>Entre na sua conta para acessar todos os recursos da plataforma</p>
+                    <a href="http://localhost:8000/front/src/Login/Login.html" class="login-button">Fazer Login</a>
+                </div>
+            </div>
+            
+            <!-- Mensagem quando usuário não tem cursos -->
+            <div class="no-courses-prompt" id="noCoursesPrompt">
+                <div class="prompt-content">
+                    <div class="prompt-icon">📚</div>
+                    <h4>Você ainda não está inscrito em nenhum curso</h4>
+                    <p>Explore nosso catálogo e encontre cursos que combinam com você</p>
+                    <a href="http://localhost:8000/front/src/Courses/Courses.html" class="browse-button">Explorar Cursos</a>
+                </div>
             </div>
         </section>
     </main>
