@@ -24,6 +24,9 @@ document.addEventListener('DOMContentLoaded', function () {
     async function initHomePage() {
         await waitForAuthManager();
         
+        // Verifica se é o primeiro acesso e mostra o modal
+        checkAndShowFirstAccessModal();
+        
         // Carrega os últimos 3 cursos para o slider
         await loadLatestCourses();
         
@@ -373,6 +376,80 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Função para verificar e mostrar modal de primeiro acesso
+    function checkAndShowFirstAccessModal() {
+        // Verifica se o usuário já viu o modal
+        const modalVisto = localStorage.getItem('modalPrimeiroAcessoVisto');
+        
+        if (!modalVisto) {
+            // Mostra o modal após um pequeno delay para melhor UX
+            setTimeout(() => {
+                const modal = document.getElementById('modalPrimeiroAcesso');
+                if (modal) {
+                    modal.classList.remove('oculto');
+                }
+            }, 500);
+        }
+    }
+
+    // Função para fechar o modal de primeiro acesso
+    function fecharModalPrimeiroAcesso() {
+        const modal = document.getElementById('modalPrimeiroAcesso');
+        if (modal) {
+            modal.classList.add('oculto');
+            // Marca como visto no localStorage
+            localStorage.setItem('modalPrimeiroAcessoVisto', 'true');
+        }
+    }
+
+    // Configurar eventos do modal
+    function setupModalEvents() {
+        const closeBtn = document.getElementById('closeModalBtn');
+        const modal = document.getElementById('modalPrimeiroAcesso');
+        const inscreverBtn = document.getElementById('inscreverBtn');
+        
+        // Botão de fechar
+        if (closeBtn) {
+            closeBtn.addEventListener('click', fecharModalPrimeiroAcesso);
+        }
+        
+        // Fechar ao clicar fora do conteúdo do modal
+        if (modal) {
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    fecharModalPrimeiroAcesso();
+                }
+            });
+        }
+        
+        // Botão de inscrever-se
+        if (inscreverBtn) {
+            inscreverBtn.addEventListener('click', function() {
+                // Fecha o modal
+                fecharModalPrimeiroAcesso();
+                // Redireciona para a página de cursos ou registro
+                if (window.authManager.isAuthenticated()) {
+                    window.location.href = 'http://localhost:8000/front/src/Courses/Courses.html';
+                } else {
+                    window.location.href = 'http://localhost:8000/front/src/Register/Register.html';
+                }
+            });
+        }
+        
+        // Fechar com tecla ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('modalPrimeiroAcesso');
+                if (modal && !modal.classList.contains('oculto')) {
+                    fecharModalPrimeiroAcesso();
+                }
+            }
+        });
+    }
+
     // Inicializar página
     initHomePage();
+    
+    // Configurar eventos do modal após o DOM estar pronto
+    setupModalEvents();
 });
