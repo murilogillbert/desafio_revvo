@@ -73,7 +73,6 @@ document.addEventListener('DOMContentLoaded', function () {
             const data = await response.json();
             
             if (data.error) {
-                console.error('Erro ao carregar cursos em destaque:', data.error);
                 showDefaultSlider();
                 return;
             }
