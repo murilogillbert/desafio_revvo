@@ -16,7 +16,7 @@ body {
     color: #333;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;          /* ESSENCIAL PARA O FOOTER IR PARA O FINAL */
+    min-height: 100vh;
 }
 
 /* ------------------------- */
@@ -317,10 +317,11 @@ body {
 
 .main {
     padding: 30px;
-    flex: 1;                    /* FAZ O MAIN OCUPAR O ESPAÇO NECESSÁRIO */
+    flex: 1;
     max-width: 1400px;
     margin: 0 auto;
     width: 100%;
+    position: relative;
 }
 
 /* ------------------------- */
@@ -355,72 +356,144 @@ body {
     box-shadow: 0 4px 12px rgba(255, 204, 0, 0.3);
 }
 
-.modal-curso {
-    margin-top: 20px;
-    padding: 20px;
-    background: #ffffff;
-    border: 2px solid #ddd;
-    border-radius: 10px;
+/* ------------------------- */
+/* MODAIS CENTRALIZADOS      */
+/* ------------------------- */
+
+.modal-container {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    backdrop-filter: blur(3px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal-container:not(.oculto) {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    width: 90%;
     max-width: 500px;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: modalSlideIn 0.3s ease;
+    position: relative;
+    transform: translateY(0);
+    transition: transform 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.modal-curso {
+    display: none; /* Esconde o modal antigo */
+}
+
+.modal-content h3 {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 22px;
+    text-align: center;
+}
+
+.modal-content label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #555;
+}
+
+.modal-content input,
+.modal-content textarea {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 8px 0 20px 0;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    transition: all 0.3s;
+    font-size: 14px;
+}
+
+.modal-content input:focus,
+.modal-content textarea:focus {
+    outline: none;
+    border-color: #ffcc00;
+    box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.15);
+}
+
+.modal-content textarea {
+    min-height: 100px;
+    resize: vertical;
 }
 
 .oculto {
-    display: none;
-}
-
-.modal-curso input,
-.modal-curso textarea {
-    width: 100%;
-    padding: 10px;
-    margin: 8px 0 15px 0;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    transition: all 0.3s;
-}
-
-.modal-curso input:focus,
-.modal-curso textarea:focus {
-    outline: none;
-    border-color: #ffcc00;
-    box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.1);
+    display: none !important;
 }
 
 .modal-actions {
     display: flex;
-    gap: 10px;
+    gap: 15px;
+    justify-content: flex-end;
+    margin-top: 10px;
 }
 
 .btn-salvar {
     background: #28a745;
     color: white;
-    padding: 10px 15px;
+    padding: 12px 25px;
     border-radius: 8px;
     border: none;
     cursor: pointer;
+    font-weight: 600;
     transition: all 0.3s;
+    min-width: 100px;
 }
 
 .btn-salvar:hover {
     background: #218838;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
 }
 
 .btn-cancelar {
-    background: #dc3545;
+    background: #6c757d;
     color: white;
-    padding: 10px 15px;
+    padding: 12px 25px;
     border-radius: 8px;
     border: none;
     cursor: pointer;
+    font-weight: 600;
     transition: all 0.3s;
+    min-width: 100px;
 }
 
 .btn-cancelar:hover {
-    background: #c82333;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+    background: #5a6268;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(108, 117, 125, 0.3);
 }
 
 /* ------------------------- */
@@ -429,7 +502,7 @@ body {
 
 .course-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 25px;
 }
 
@@ -439,24 +512,27 @@ body {
 
 .curso-card {
     background: white;
-    border-radius: 10px;
-    padding: 15px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-    transition: 0.3s;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .curso-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 18px rgba(0,0,0,0.15);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
 }
 
 .curso-img {
     width: 100%;
-    height: 150px;
+    height: 160px;
     border-radius: 8px;
     object-fit: cover;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     transition: transform 0.3s;
 }
 
@@ -465,15 +541,19 @@ body {
 }
 
 .curso-card h3 {
-    margin: 8px 0;
+    margin: 10px 0;
     font-size: 18px;
     color: #333;
+    line-height: 1.4;
+    min-height: 50px;
 }
 
 .curso-card p {
     font-size: 14px;
     color: #666;
     line-height: 1.5;
+    margin-bottom: 15px;
+    flex-grow: 1;
 }
 
 /* ------------------------- */
@@ -481,42 +561,63 @@ body {
 /* ------------------------- */
 
 .curso-actions {
-    margin-top: 10px;
+    margin-top: auto;
     display: flex;
     justify-content: space-between;
+    gap: 10px;
 }
 
 .btn-editar,
 .btn-deletar {
-    padding: 8px 12px;
-    font-size: 12px;
-    font-weight: bold;
-    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 6px;
     cursor: pointer;
     border: none;
     transition: all 0.3s;
+    flex: 1;
+    text-align: center;
 }
 
 .btn-editar {
-    background: #0a84ff;
+    background: #007bff;
     color: white;
 }
 
 .btn-editar:hover {
-    background: #0069d9;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(10, 132, 255, 0.3);
+    background: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
 }
 
 .btn-deletar {
-    background: #ff3b30;
+    background: #dc3545;
     color: white;
 }
 
 .btn-deletar:hover {
-    background: #d92b22;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(255, 59, 48, 0.3);
+    background: #c82333;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
+}
+
+/* ------------------------- */
+/* OVERLAY PARA MODAIS (mantido para compatibilidade) */
+/* ------------------------- */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1999;
+    backdrop-filter: blur(3px);
 }
 
 /* ------------------------- */
@@ -527,7 +628,7 @@ body {
     background: white;
     padding: 40px 20px;
     border-top: 1px solid #ddd;
-    margin-top: auto;         
+    margin-top: auto;
 }
 
 .general-info {
@@ -573,6 +674,42 @@ body {
     margin-top: 30px;
     color: #777;
     font-size: 13px;
+}
+
+/* ------------------------- */
+/* MENSAGENS FLUTUANTES      */
+/* ------------------------- */
+
+.mensagem-flutuante {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 25px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    z-index: 9999;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    animation: fadeInOut 3s ease-in-out;
+}
+
+.mensagem-sucesso {
+    background-color: #28a745;
+}
+
+.mensagem-erro {
+    background-color: #dc3545;
+}
+
+.mensagem-info {
+    background-color: #007bff;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translateY(-20px); }
+    15% { opacity: 1; transform: translateY(0); }
+    85% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-20px); }
 }
 
 /* ------------------------- */
@@ -635,6 +772,27 @@ body {
         text-align: center;
         align-items: center;
     }
+    
+    .course-list {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 15px;
+    }
+    
+    .modal-content {
+        padding: 20px;
+        width: 95%;
+        max-height: 90vh;
+        margin: 20px;
+    }
+    
+    .modal-actions {
+        flex-direction: column;
+    }
+    
+    .btn-salvar,
+    .btn-cancelar {
+        width: 100%;
+    }
 }
 
 @media (max-width: 480px) {
@@ -668,6 +826,17 @@ body {
     .actions {
         justify-content: center;
     }
+    
+    .curso-actions {
+        flex-direction: column;
+    }
+    
+    .modal-content {
+        padding: 15px;
+        width: 100%;
+        margin: 10px;
+        border-radius: 8px;
+    }
 }
 
 /* Animações adicionais */
@@ -684,4 +853,20 @@ body {
 
 .auth-actions {
     animation: fadeIn 0.3s ease;
+}
+
+/* Efeito de carregamento */
+.curso-card {
+    animation: cardFadeIn 0.5s ease;
+}
+
+@keyframes cardFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

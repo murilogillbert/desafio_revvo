@@ -5,77 +5,73 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="Admin.css">
-    <script src="../../js/cursoAdmin.js" defer> </script>
-        <!-- Inclui o header dinamicamente -->
+    <script src="../../js/cursoAdmin.js" defer></script>
+    <!-- Inclui o header dinamicamente -->
     <script src="/front/js/header-include.js"></script>
-
     <!-- Sistema de autenticação -->
     <script src="/front/js/auth.js"></script>
     <title>Painel de Gerenciamento</title>
 </head>
 
 <body>
-
-
     <!-- MAIN -->
     <main class="main">
-
         <!-- Área de botões do administrador -->
-
         <section class="actions">
             <button class="btn btn-add" id="btnAddCurso" onclick="abrirModalCriar()">Adicionar novo curso</button>
         </section>
 
         <!-- MODAL DE CRIAR CURSO -->
-        <div id="modalCriarCurso" class="modal-curso oculto">
+        <div id="modalCriarCurso" class="modal-container oculto">
+            <div class="modal-content">
+                <h3>Criar novo curso</h3>
 
-            <h3>Criar novo curso</h3>
+                <label>Nome do curso</label>
+                <input type="text" id="inputName" placeholder="Nome do curso">
 
-            <label>Nome do curso</label>
-            <input type="text" id="inputName" placeholder="Nome do curso">
+                <label>Descrição</label>
+                <textarea id="inputDescription" placeholder="Descrição do curso"></textarea>
 
-            <label>Descrição</label>
-            <textarea id="inputDescription" placeholder="Descrição do curso"></textarea>
+                <label>URL da Imagem</label>
+                <input type="text" id="inputUrlImage" placeholder="https://...">
 
-            <label>URL da Imagem</label>
-            <input type="text" id="inputUrlImage" placeholder="https://...">
-
-            <div class="modal-actions">
-                <button class="btn-salvar" onclick="submitCriarCurso()">Salvar</button>
-                <button class="btn-cancelar" onclick="fecharModalCriar()">Cancelar</button>
+                <div class="modal-actions">
+                    <button class="btn-salvar" onclick="submitCriarCurso()">Salvar</button>
+                    <button class="btn-cancelar" onclick="fecharModalCriar()">Cancelar</button>
+                </div>
             </div>
-
         </div>
-
 
         <!-- Lista de cursos já cadastrados -->
         <section class="course-list" id="listaDeCursos">
             <!-- Os cards dos cursos serão inseridos aqui via JS -->
         </section>
+
         <!-- MODAL EDITAR CURSO -->
-        <div id="modalEditarCurso" class="modal-curso oculto">
+        <div id="modalEditarCurso" class="modal-container oculto">
+            <div class="modal-content">
+                <h3>Editar curso</h3>
 
-            <h3>Editar curso</h3>
+                <input type="hidden" id="editId">
 
-            <input type="hidden" id="editId">
+                <label>Nome do curso</label>
+                <input type="text" id="editName" placeholder="Nome do curso">
 
-            <label>Nome do curso</label>
-            <input type="text" id="editName" placeholder="Nome do curso">
+                <label>Descrição</label>
+                <textarea id="editDescription" placeholder="Descrição do curso"></textarea>
 
-            <label>Descrição</label>
-            <textarea id="editDescription" placeholder="Descrição do curso"></textarea>
+                <label>URL da Imagem</label>
+                <input type="text" id="editUrlImage" placeholder="https://...">
 
-            <label>URL da Imagem</label>
-            <input type="text" id="editUrlImage" placeholder="https://...">
-
-            <div class="modal-actions">
-                <button class="btn-salvar" onclick="submitEditarCurso()">Salvar</button>
-                <button class="btn-cancelar" onclick="fecharModalEditar()">Cancelar</button>
+                <div class="modal-actions">
+                    <button class="btn-salvar" onclick="submitEditarCurso()">Salvar</button>
+                    <button class="btn-cancelar" onclick="fecharModalEditar()">Cancelar</button>
+                </div>
             </div>
-
         </div>
 
-
+        <!-- OVERLAY PARA MODAIS (opcional, mantido para compatibilidade) -->
+        <div id="modalOverlay" class="modal-overlay oculto" onclick="fecharModais()"></div>
     </main>
 
     <footer class="footer">
@@ -106,6 +102,31 @@
             Copyright 2017 – All rights reserved.
         </div>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof listarCursos === 'function') {
+                listarCursos();
+            }
+            
+            // Fechar modal ao clicar fora do conteúdo
+            document.querySelectorAll('.modal-container').forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.classList.add('oculto');
+                        document.getElementById('modalOverlay').classList.add('oculto');
+                    }
+                });
+            });
+            
+            // Fechar modal com tecla ESC
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    fecharModais();
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
