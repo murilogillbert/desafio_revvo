@@ -64,17 +64,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 showEnrollmentButtons(false, false);
             }
             
-            // Carrega módulos/aulas do curso
-            await loadCourseModules(courseId);
-            
-            // Carrega informações do instrutor
-            if (courseData.course.idCreator) {
-                await loadInstructorInfo(courseData.course.idCreator);
-            }
-            
-            // Carrega estatísticas do curso
-            await loadCourseStats(courseId);
-            
         } catch (error) {
             console.error('Erro ao carregar curso:', error);
             showError('Não foi possível carregar o curso. Tente novamente.');
@@ -88,21 +77,22 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('courseTitleBreadcrumb').textContent = course.name;
         
         // Descrição
-        document.getElementById('courseDescription').textContent = course.description || 'Descrição não disponível';
+        const description = course.description || 'Este curso ainda não possui uma descrição.';
+        document.getElementById('courseDescription').textContent = description;
         document.getElementById('courseFullDescription').innerHTML = `
-            <p>${course.description || 'Este curso ainda não possui uma descrição detalhada.'}</p>
-            ${course.full_description ? `<p>${course.full_description}</p>` : ''}
+            <p>${description}</p>
         `;
         
         // Datas
         if (course.created_at) {
             const createdDate = new Date(course.created_at).toLocaleDateString('pt-BR');
             document.getElementById('courseCreatedAt').textContent = createdDate;
+            document.getElementById('courseCreatedAtSide').textContent = createdDate;
         }
         
         if (course.modified_at) {
             const updatedDate = new Date(course.modified_at).toLocaleDateString('pt-BR');
-            document.getElementById('courseUpdatedAt').textContent = updatedDate;
+            document.getElementById('courseUpdatedAtSide').textContent = updatedDate;
         }
         
         // Imagem
@@ -110,14 +100,10 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('courseImage').src = course.urlImage;
         }
         
-        // Requisitos (exemplo estático - em produção viria do banco)
-        const requirementsList = document.getElementById('courseRequirements');
-        requirementsList.innerHTML = `
-            <li>Dominar os conceitos básicos apresentados no curso</li>
-            <li>Completar todas as atividades práticas</li>
-            <li>Participar das discussões e fóruns</li>
-            <li>Realizar o projeto final para certificação</li>
-        `;
+        // Criador
+        if (course.creator_name) {
+            document.getElementById('courseCreator').textContent = course.creator_name;
+        }
     }
 
     // Função para verificar inscrição do usuário
@@ -235,7 +221,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Função para continuar/revisar curso
     function continueCourse() {
         const courseId = courseIdFromUrl();
-        // Em implementação real, isso redirecionaria para a primeira aula não assistida
+        // Em implementação real, isso redirecionaria para o conteúdo
         alert('Redirecionando para o conteúdo do curso...');
         // window.location.href = `lesson.html?course=${courseId}`;
     }
@@ -279,177 +265,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Função para carregar módulos/aulas do curso
-    async function loadCourseModules(courseId) {
-        try {
-            const modulesLoading = document.getElementById('modulesLoading');
-            const modulesList = document.getElementById('modulesList');
-            
-            // Simulação de carregamento de módulos
-            // Em produção, isso viria de uma API
-            setTimeout(() => {
-                modulesLoading.style.display = 'none';
-                modulesList.style.display = 'block';
-                
-                // Dados de exemplo
-                const modules = [
-                    {
-                        id: 1,
-                        title: 'Módulo 1: Introdução',
-                        lessons: [
-                            { id: 1, title: 'Bem-vindo ao curso', duration: '5min', watched: true },
-                            { id: 2, title: 'Configuração do ambiente', duration: '15min', watched: true },
-                            { id: 3, title: 'Primeiros passos', duration: '20min', watched: false }
-                        ]
-                    },
-                    {
-                        id: 2,
-                        title: 'Módulo 2: Conceitos Fundamentais',
-                        lessons: [
-                            { id: 4, title: 'Princípios básicos', duration: '25min', watched: false },
-                            { id: 5, title: 'Exercícios práticos', duration: '30min', watched: false }
-                        ]
-                    },
-                    {
-                        id: 3,
-                        title: 'Módulo 3: Projeto Final',
-                        lessons: [
-                            { id: 6, title: 'Desenvolvimento do projeto', duration: '45min', watched: false },
-                            { id: 7, title: 'Apresentação final', duration: '10min', watched: false }
-                        ]
-                    }
-                ];
-                
-                // Renderiza os módulos
-                modulesList.innerHTML = modules.map(module => `
-                    <div class="module-item" data-module-id="${module.id}">
-                        <div class="module-header">
-                            <h3><span>📁</span> ${module.title}</h3>
-                            <span class="module-toggle">▼</span>
-                        </div>
-                        <div class="lessons-list">
-                            ${module.lessons.map(lesson => `
-                                <div class="lesson-item ${lesson.watched ? 'lesson-watched' : ''}" data-lesson-id="${lesson.id}">
-                                    <span class="lesson-icon">${lesson.watched ? '✓' : '▶'}</span>
-                                    <div class="lesson-content">
-                                        <div class="lesson-title">${lesson.title}</div>
-                                        <div class="lesson-duration">${lesson.duration}</div>
-                                    </div>
-                                    <button class="lesson-watch-btn">
-                                        ${lesson.watched ? 'ASSISTIR NOVAMENTE' : 'ASSISTIR'}
-                                    </button>
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>
-                `).join('');
-                
-                // Configura eventos dos módulos
-                setupModuleEvents();
-                
-            }, 1000);
-            
-        } catch (error) {
-            console.error('Erro ao carregar módulos:', error);
-            document.getElementById('modulesLoading').innerHTML = `
-                <p style="color: #dc3545;">Erro ao carregar conteúdo do curso.</p>
-            `;
-        }
-    }
-
-    // Função para configurar eventos dos módulos
-    function setupModuleEvents() {
-        const moduleHeaders = document.querySelectorAll('.module-header');
-        
-        moduleHeaders.forEach(header => {
-            header.addEventListener('click', function() {
-                const moduleItem = this.parentElement;
-                moduleItem.classList.toggle('active');
-            });
-        });
-        
-        const lessonButtons = document.querySelectorAll('.lesson-watch-btn');
-        lessonButtons.forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.stopPropagation();
-                const lessonItem = this.closest('.lesson-item');
-                const lessonId = lessonItem.dataset.lessonId;
-                watchLesson(lessonId, lessonItem);
-            });
-        });
-    }
-
-    // Função para assistir aula
-    async function watchLesson(lessonId, lessonItem) {
-        if (!window.authManager.isAuthenticated()) {
-            if (confirm('Você precisa fazer login para assistir esta aula. Deseja fazer login agora?')) {
-                window.location.href = 'http://localhost:8000/front/src/Login/Login.html';
-            }
-            return;
-        }
-        
-        try {
-            // Marca aula como assistida
-            const user = window.authManager.getCurrentUser();
-            const courseId = courseIdFromUrl();
-            
-            // Em produção, isso seria uma chamada à API
-            console.log(`Marcando aula ${lessonId} como assistida para usuário ${user.id} no curso ${courseId}`);
-            
-            // Atualiza interface
-            lessonItem.classList.add('lesson-watched');
-            lessonItem.querySelector('.lesson-icon').textContent = '✓';
-            lessonItem.querySelector('.lesson-watch-btn').textContent = 'ASSISTIR NOVAMENTE';
-            
-            // Atualiza progresso
-            await loadCourseProgress(courseId, user.id);
-            
-        } catch (error) {
-            console.error('Erro ao marcar aula como assistida:', error);
-        }
-    }
-
-    // Função para carregar informações do instrutor
-    async function loadInstructorInfo(instructorId) {
-        try {
-            // Em produção, isso buscaria do banco de dados
-            // Aqui usamos dados de exemplo
-            const instructor = {
-                name: 'Professor Exemplo',
-                bio: 'Especialista com 10 anos de experiência na área. Já ministrou cursos para mais de 1000 alunos.',
-                avatar: 'https://i.pravatar.cc/100'
-            };
-            
-            document.getElementById('instructorName').textContent = instructor.name;
-            document.getElementById('instructorBio').textContent = instructor.bio;
-            document.getElementById('instructorAvatar').src = instructor.avatar;
-            
-        } catch (error) {
-            console.error('Erro ao carregar informações do instrutor:', error);
-        }
-    }
-
-    // Função para carregar estatísticas do curso
-    async function loadCourseStats(courseId) {
-        try {
-            // Dados de exemplo
-            const stats = {
-                duration: '8 horas',
-                level: 'Intermediário',
-                students: Math.floor(Math.random() * 1000) + 100,
-                rating: (Math.random() * 1 + 4).toFixed(1)
-            };
-            
-            document.getElementById('courseDuration').textContent = stats.duration;
-            document.getElementById('courseLevel').textContent = stats.level;
-            document.getElementById('courseStudents').textContent = stats.students.toLocaleString();
-            document.getElementById('courseRating').textContent = stats.rating;
-            
-        } catch (error) {
-            console.error('Erro ao carregar estatísticas:', error);
-        }
-    }
-
     // Função para obter courseId da URL
     function courseIdFromUrl() {
         const urlParams = new URLSearchParams(window.location.search);
@@ -480,67 +295,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Função para configurar eventos
     function setupEventListeners() {
-        // Modal de notas
-        const notesModal = document.getElementById('notesModal');
-        const quickNotesBtn = document.getElementById('quickNotes');
-        const modalClose = document.querySelector('.modal-close');
-        const cancelNotes = document.getElementById('cancelNotes');
-        const saveNotes = document.getElementById('saveNotes');
-        
-        if (quickNotesBtn) {
-            quickNotesBtn.addEventListener('click', () => {
-                if (!window.authManager.isAuthenticated()) {
-                    alert('Faça login para usar as anotações.');
-                    return;
-                }
-                notesModal.classList.add('active');
-            });
-        }
-        
-        if (modalClose) modalClose.addEventListener('click', () => notesModal.classList.remove('active'));
-        if (cancelNotes) cancelNotes.addEventListener('click', () => notesModal.classList.remove('active'));
-        
-        if (saveNotes) {
-            saveNotes.addEventListener('click', () => {
-                const notes = document.getElementById('notesTextarea').value;
-                // Salvar notas (em produção seria uma chamada à API)
-                localStorage.setItem(`course_notes_${courseIdFromUrl()}`, notes);
-                alert('Anotações salvas!');
-                notesModal.classList.remove('active');
-            });
-        }
-        
-        // Fechar modal ao clicar fora
-        notesModal.addEventListener('click', (e) => {
-            if (e.target === notesModal) {
-                notesModal.classList.remove('active');
-            }
-        });
-        
-        // Carregar notas salvas
-        const savedNotes = localStorage.getItem(`course_notes_${courseIdFromUrl()}`);
-        if (savedNotes) {
-            document.getElementById('notesTextarea').value = savedNotes;
-        }
-        
-        // Outras ações rápidas
-        document.getElementById('quickResources').addEventListener('click', () => {
-            alert('Recursos serão disponibilizados em breve!');
-        });
-        
-        document.getElementById('quickCertificate').addEventListener('click', () => {
-            if (!window.authManager.isAuthenticated()) {
-                alert('Faça login para verificar certificado.');
-                return;
-            }
-            alert('Certificado disponível após conclusão do curso!');
-        });
-        
+        // Compartilhar
         document.getElementById('quickShare').addEventListener('click', () => {
             const courseUrl = window.location.href;
+            const courseTitle = document.getElementById('courseTitle').textContent;
+            
             if (navigator.share) {
                 navigator.share({
-                    title: document.getElementById('courseTitle').textContent,
+                    title: courseTitle,
                     text: 'Confira este curso incrível!',
                     url: courseUrl
                 });

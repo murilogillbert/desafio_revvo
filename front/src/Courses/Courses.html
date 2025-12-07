@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Cursos - Plataforma de Cursos</title>
+    <link rel="stylesheet" href="../shared.css">
+    <link rel="stylesheet" href="Courses.css">
+</head>
+<body>
+    <!-- Header será inserido aqui pelo JavaScript -->
+    
+    <main class="courses-main">
+        <!-- Cabeçalho -->
+        <div class="courses-header">
+            <div class="courses-hero">
+                <h1>Catálogo de Cursos</h1>
+                <p>Descubra todos os cursos disponíveis e encontre o ideal para você</p>
+            </div>
+        </div>
+
+        <!-- Filtros e Ordenação -->
+        <div class="courses-controls">
+            <div class="controls-container">
+                <!-- Busca -->
+                <div class="search-control">
+                    <div class="search-icon">🔍</div>
+                    <input type="text" 
+                           id="searchInput" 
+                           placeholder="Buscar cursos por nome, descrição..."
+                           class="search-input">
+                    <button id="searchBtn" class="search-btn">Buscar</button>
+                </div>
+
+                <!-- Filtros Simples -->
+                <div class="filters-container">
+                    <div class="filter-group">
+                        <label for="sortSelect">Ordenar por:</label>
+                        <select id="sortSelect" class="filter-select">
+                            <option value="newest">Mais Recentes</option>
+                            <option value="oldest">Mais Antigos</option>
+                            <option value="name_asc">Nome (A-Z)</option>
+                            <option value="name_desc">Nome (Z-A)</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-actions">
+                        <button id="clearFilters" class="btn-clear">Limpar Filtros</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conteúdo Principal -->
+        <div class="courses-content">
+            <!-- Lista de Cursos -->
+            <div class="courses-list-container">
+                <!-- Mensagens de Status -->
+                <div class="status-messages">
+                    <div id="loadingMessage" class="loading-message" style="display: none;">
+                        <div class="spinner"></div>
+                        <p>Carregando cursos...</p>
+                    </div>
+                    
+                    <div id="noResultsMessage" class="no-results" style="display: none;">
+                        <div class="no-results-icon">😞</div>
+                        <h3>Nenhum curso encontrado</h3>
+                        <p>Tente ajustar seus filtros ou termos de busca</p>
+                        <button id="resetSearch" class="btn-reset">Limpar busca</button>
+                    </div>
+                    
+                    <div id="errorMessage" class="error-message" style="display: none;">
+                        <div class="error-icon">⚠️</div>
+                        <h3>Erro ao carregar cursos</h3>
+                        <p id="errorText">Tente novamente em alguns instantes</p>
+                        <button id="retryBtn" class="btn-retry">Tentar novamente</button>
+                    </div>
+                </div>
+
+                <!-- Estatísticas -->
+                <div class="courses-stats">
+                    <div class="stat-item">
+                        <span class="stat-number" id="totalCourses">0</span>
+                        <span class="stat-label">Cursos encontrados</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="currentPage">1</span>
+                        <span class="stat-label">Página atual</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="totalPages">1</span>
+                        <span class="stat-label">Total de páginas</span>
+                    </div>
+                </div>
+
+                <!-- Grade de Cursos -->
+                <div class="courses-grid" id="coursesGrid">
+                    <!-- Cursos serão carregados aqui pelo JavaScript -->
+                </div>
+
+                <!-- Paginação -->
+                <div class="pagination-container" id="paginationContainer" style="display: none;">
+                    <div class="pagination">
+                        <button id="firstPage" class="pagination-btn" disabled>
+                            « Primeira
+                        </button>
+                        <button id="prevPage" class="pagination-btn" disabled>
+                            ‹ Anterior
+                        </button>
+                        
+                        <div class="page-numbers" id="pageNumbers">
+                            <!-- Números das páginas serão inseridos aqui -->
+                        </div>
+                        
+                        <button id="nextPage" class="pagination-btn">
+                            Próxima ›
+                        </button>
+                        <button id="lastPage" class="pagination-btn">
+                            Última »
+                        </button>
+                    </div>
+                    
+                    <div class="pagination-info">
+                        <span>Mostrando <span id="startItem">1</span>-<span id="endItem">20</span> de <span id="totalItems">0</span> cursos</span>
+                        <div class="items-per-page">
+                            <label for="itemsPerPage">Itens por página:</label>
+                            <select id="itemsPerPage" class="items-select">
+                                <option value="10">10</option>
+                                <option value="20" selected>20</option>
+                                <option value="30">30</option>
+                                <option value="50">50</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer será inserido aqui pelo JavaScript -->
+    
+    <!-- Scripts -->
+    <script src="/front/js/auth.js"></script>
+    <script src="/front/js/header-include.js"></script>
+    <script src="/front/js/footer-include.js"></script>
+    <script src="Courses.js"></script>
+</body>
+</html>

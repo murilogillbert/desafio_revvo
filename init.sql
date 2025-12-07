@@ -56,3 +56,28 @@ CREATE TABLE IF NOT EXISTS `userCourse` (
 
 INSERT INTO `user` (`nome`, `email`, `senha`, `role`)
 VALUES ('admin', 'admin@admin.com', 'admin', 'admin');
+
+-- Inserts dos cursos (vinculados ao admin - idCreator = 1)
+INSERT INTO `course` (`idCreator`, `name`, `description`, `urlImage`)
+VALUES (1, 'Introducao ao Desenvolvimento Web', 'Fundamentos de HTML, CSS e JavaScript.', 'https://images.wallpaperscraft.com/image/single/flowers_frost_petals_1479314_1920x1080.jpg');
+
+INSERT INTO `course` (`idCreator`, `name`, `description`, `urlImage`)
+VALUES (1, 'Banco de Dados para Iniciantes', 'Conceitos basicos de bancos de dados relacionais e SQL.', 'https://images.wallpaperscraft.com/image/single/islands_rocks_sea_1479067_1920x1080.jpg');
+
+INSERT INTO `course` (`idCreator`, `name`, `description`, `urlImage`)
+VALUES (1, 'Logica de Programacao do Zero', 'Aprenda a criar algoritmos de forma simples e pratica.', 'https://images.wallpaperscraft.com/image/single/galaxy_stars_nebula_1478923_1920x1080.jpg');
+
+INSERT INTO `course` (`idCreator`, `name`, `description`, `urlImage`)
+VALUES (1, 'Fundamentos de JavaScript', 'Variaveis, funcoes, arrays e eventos no JavaScript.', 'https://images.wallpaperscraft.com/image/single/sea_rocks_lighthouse_1478535_1920x1080.jpg');
+
+INSERT INTO `course` (`idCreator`, `name`, `description`, `urlImage`)
+VALUES (1, 'Git e GitHub na Pratica', 'Controle de versao e colaboracao com Git e GitHub.', 'https://images.wallpaperscraft.com/image/single/nebula_glitter_stars_1478112_1920x1080.jpg');
+
+INSERT INTO `course` (`idCreator`, `name`, `description`, `urlImage`)
+VALUES (1, 'API REST com PHP', 'Aprenda a criar APIs RESTful com PHP puro.', 'https://images.wallpaperscraft.com/image/single/lake_water_stones_1477767_1920x1080.jpg');
+
+INSERT INTO `course` (`idCreator`, `name`, `description`, `urlImage`)
+VALUES (1, 'Introducao a Programacao em Python', 'Aprenda Python desde o basico ate o avancado.', 'https://images.wallpaperscraft.com/image/single/leaves_ice_frost_1477390_1920x1080.jpg');
+
+INSERT INTO `course` (`idCreator`, `name`, `description`, `urlImage`)
+VALUES (1, 'Seguranca da Informacao Basica', 'Principios de seguranca, criptografia e boas praticas.', 'https://images.wallpaperscraft.com/image/single/landscape_forest_tree_1477189_1920x1080.jpg');
