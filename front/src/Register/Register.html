@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Plataforma de Cursos</title>
+    <link rel="stylesheet" href="Register.css">
+</head>
+<body>
+    <!-- Header será inserido aqui pelo JavaScript -->
+    
+    <main class="main">
+        <div class="register-page">
+            <div class="register-container">
+                <div class="register-header">
+                    <h1>Criar Conta</h1>
+                    <p>Junte-se à nossa comunidade de aprendizado</p>
+                </div>
+                
+                <form class="register-form" id="registerForm">
+                    <div class="form-group">
+                        <label for="nome">Nome Completo *</label>
+                        <input 
+                            type="text" 
+                            id="nome" 
+                            class="form-input" 
+                            placeholder="Seu nome"
+                            required
+                            autocomplete="name"
+                        >
+                        <div class="error-message" id="nomeError">O nome é obrigatório</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">E-mail *</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            class="form-input" 
+                            placeholder="seu@email.com"
+                            required
+                            autocomplete="email"
+                        >
+                        <div class="error-message" id="emailError">Por favor, insira um e-mail válido</div>
+                        <div class="error-message" id="emailExistsError">Este e-mail já está cadastrado</div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="password">Senha *</label>
+                            <input 
+                                type="password" 
+                                id="password" 
+                                class="form-input" 
+                                placeholder="Mínimo 6 caracteres"
+                                required
+                                autocomplete="new-password"
+                                minlength="6"
+                            >
+                            <div class="error-message" id="passwordError">A senha deve ter no mínimo 6 caracteres</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirmar Senha *</label>
+                            <input 
+                                type="password" 
+                                id="confirmPassword" 
+                                class="form-input" 
+                                placeholder="Digite novamente"
+                                required
+                                autocomplete="new-password"
+                            >
+                            <div class="error-message" id="confirmPasswordError">As senhas não coincidem</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group terms-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="terms" required>
+                            <span>Eu concordo com os <a href="#">Termos de Uso</a> e <a href="#">Política de Privacidade</a> *</span>
+                        </label>
+                        <div class="error-message" id="termsError">Você deve aceitar os termos</div>
+                    </div>
+                    
+                    <div class="error-message" id="registerError"></div>
+                    <div class="success-message" id="successMessage"></div>
+                    
+                    <button type="submit" class="register-btn" id="registerBtn">
+                        Criar Conta
+                    </button>
+                </form>
+                
+                <div class="register-footer">
+                    <p>
+                        Já tem uma conta? 
+                        <a href="http://localhost:8000/front/src/Login/Login.html">Faça login aqui</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Footer será inserido aqui pelo JavaScript -->
+    
+    <!-- Scripts -->
+    <script src="/front/js/auth.js"></script>
+    <script src="/front/js/header-include.js"></script>
+    <script src="/front/js/footer-include.js"></script>
+    <script src="register.js"></script>
+</body>
+</html>

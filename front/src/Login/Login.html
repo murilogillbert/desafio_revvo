@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Plataforma de Cursos</title>
+    <link rel="stylesheet" href="Login.css">
+</head>
+<body>
+    <!-- Header será inserido aqui pelo JavaScript -->
+    
+    <main class="main">
+        <div class="login-page">
+            <div class="login-container">
+                <div class="login-header">
+                    <h1>Entrar na Plataforma</h1>
+                    <p>Faça login para acessar seus cursos</p>
+                </div>
+                
+                <div class="success-message" id="successMessage">
+                    Cadastro realizado com sucesso! Você já pode fazer login.
+                </div>
+                
+                <form class="login-form" id="loginForm">
+                    <div class="form-group">
+                        <label for="email">E-mail</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            class="form-input" 
+                            placeholder="seu@email.com"
+                            required
+                            autocomplete="email"
+                        >
+                        <div class="error-message" id="emailError">Por favor, insira um e-mail válido</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Senha</label>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            class="form-input" 
+                            placeholder="Sua senha"
+                            required
+                            autocomplete="current-password"
+                        >
+                        <div class="error-message" id="passwordError">A senha é obrigatória</div>
+                        <div class="error-message" id="loginError"></div>
+                    </div>
+                    
+                    <button type="submit" class="login-btn" id="loginBtn">
+                        Entrar
+                    </button>
+                </form>
+                
+                <div class="login-footer">
+                    <p>
+                        Não tem uma conta? 
+                        <a href="http://localhost:8000/front/src/Register/Register.html">Cadastre-se aqui</a>
+                    </p>
+                    <p>
+                        <a href="http://localhost:8000/front/src/ForgotPassword/ForgotPassword.html">Esqueceu sua senha?</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Footer será inserido aqui pelo JavaScript -->
+    
+    <!-- Scripts -->
+    <script src="/front/js/auth.js"></script>
+    <script src="/front/js/header-include.js"></script>
+    <script src="/front/js/footer-include.js"></script>
+    <script src="login.js"></script>
+</body>
+</html>

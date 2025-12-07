@@ -66,7 +66,7 @@ class AuthManager {
      */
     async login(email, senha) {
         try {
-            const response = await fetch(`${this.API_BASE_URL}/auth.php`, {
+            const response = await fetch(`${this.API_BASE_URL}/auth.php?action=login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

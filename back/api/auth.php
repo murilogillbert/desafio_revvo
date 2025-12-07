@@ -1,5 +1,8 @@
 <?php
 header("Content-Type: application/json; charset=UTF-8");
+header("Access-Control-Allow-Origin: http://localhost:8000");
+header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
 require_once "../connector.php";
 
 function safeJson($data) {
@@ -7,10 +10,29 @@ function safeJson($data) {
     exit;
 }
 
-$action = $_GET["action"] ?? ($_POST["action"] ?? null);
+// Para requisições OPTIONS (CORS preflight)
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    safeJson(["status" => "ok"]);
+}
+
+// Verifica se é POST
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    safeJson(["error" => "Método não permitido"]);
+}
+
+// Pega a ação da query string
+$action = $_GET['action'] ?? null;
 
 if (!$action) {
     safeJson(["error" => "Ação não especificada"]);
+}
+
+// Lê os dados JSON
+$input = file_get_contents('php://input');
+$data = json_decode($input, true);
+
+if (!$data) {
+    safeJson(["error" => "Dados JSON inválidos"]);
 }
 
 try {
@@ -20,9 +42,7 @@ try {
         // LOGIN
         // ---------------------------------------------------------
         case "login":
-            $data = json_decode(file_get_contents("php://input"), true);
-            
-            if (!$data || !isset($data["email"], $data["senha"])) {
+            if (!isset($data["email"], $data["senha"])) {
                 safeJson(["error" => "Email e senha são obrigatórios"]);
             }
             
@@ -38,22 +58,13 @@ try {
                 safeJson(["error" => "Usuário não encontrado"]);
             }
             
-            // Verifica a senha (em produção, use password_hash/password_verify)
-            // NOTA: No seu INSERT inicial, a senha está em texto plano: 'admin'
-            // Em produção, você deve usar:
-            // $hashedPassword = password_hash($senha, PASSWORD_DEFAULT);
-            // E verificar com: password_verify($senha, $user['senha'])
-            
+            // Verifica a senha (em texto plano por enquanto)
             if ($senha !== $user['senha']) {
                 safeJson(["error" => "Senha incorreta"]);
             }
             
             // Remove a senha do objeto de resposta
             unset($user['senha']);
-            
-            // Aqui você pode gerar um token JWT em produção
-            // $token = generateJWT($user);
-            // $user['token'] = $token;
             
             safeJson([
                 "message" => "Login realizado com sucesso",
@@ -62,56 +73,49 @@ try {
             break;
             
         // ---------------------------------------------------------
-        // VALIDAR SESSÃO (simplificado)
-        // ---------------------------------------------------------
-        case "validate":
-            // Em produção, você validaria um token JWT
-            // Por enquanto, apenas retorna sucesso se o token existir
-            $headers = getallheaders();
-            $authHeader = $headers['Authorization'] ?? '';
-            
-            if (strpos($authHeader, 'Bearer ') === 0) {
-                $token = substr($authHeader, 7);
-                // Validar token aqui (não implementado neste exemplo)
-                safeJson(["valid" => true]);
-            }
-            
-            safeJson(["error" => "Token não fornecido"]);
-            break;
-            
-        // ---------------------------------------------------------
-        // REGISTRAR USUÁRIO (opcional)
+        // REGISTRO
         // ---------------------------------------------------------
         case "register":
-            $data = json_decode(file_get_contents("php://input"), true);
+            if (!isset($data["nome"], $data["email"], $data["senha"])) {
+                safeJson(["error" => "Todos os campos são obrigatórios"]);
+            }
             
-            if (!$data || !isset($data["nome"], $data["email"], $data["senha"])) {
-                safeJson(["error" => "Dados incompletos"]);
+            $nome = trim($data["nome"]);
+            $email = trim($data["email"]);
+            $senha = $data["senha"]; // Em produção, usar password_hash()
+            
+            // Valor padrão para role
+            $role = $data["role"] ?? 'aluno';
+            
+            // Validações básicas
+            if (strlen($nome) < 2) {
+                safeJson(["error" => "O nome deve ter pelo menos 2 caracteres"]);
+            }
+            
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                safeJson(["error" => "E-mail inválido"]);
+            }
+            
+            if (strlen($senha) < 6) {
+                safeJson(["error" => "A senha deve ter no mínimo 6 caracteres"]);
             }
             
             // Verifica se email já existe
             $stmt = $pdo->prepare("SELECT id FROM user WHERE email = ?");
-            $stmt->execute([$data["email"]]);
+            $stmt->execute([$email]);
             
             if ($stmt->fetch()) {
-                safeJson(["error" => "Email já cadastrado"]);
+                safeJson(["error" => "Este e-mail já está cadastrado"]);
             }
             
-            // Hash da senha (em produção)
-            // $hashedPassword = password_hash($data["senha"], PASSWORD_DEFAULT);
-            $hashedPassword = $data["senha"]; // Temporário
-            
+            // Insere o novo usuário
+            // EM PRODUÇÃO: Use password_hash($senha, PASSWORD_DEFAULT)
             $stmt = $pdo->prepare("
                 INSERT INTO user (nome, email, senha, role) 
                 VALUES (?, ?, ?, ?)
             ");
             
-            $stmt->execute([
-                $data["nome"],
-                $data["email"],
-                $hashedPassword,
-                $data["role"] ?? "aluno" // Por padrão, cria como aluno
-            ]);
+            $stmt->execute([$nome, $email, $senha, $role]);
             
             $userId = $pdo->lastInsertId();
             
